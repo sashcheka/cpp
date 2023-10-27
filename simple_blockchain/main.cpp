@@ -70,7 +70,10 @@ class Wallet {
     string signTransaction(Transaction transaction) {
       return "signature";
     }
-    void printWallet() {};
+    void printWallet() {
+      cout << "Wallet address: " << this->address << "\n";
+      cout << "Wallet public key: " << this->publicKey << "\n";
+    }
 };
 
 int main() {
