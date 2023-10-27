@@ -13,6 +13,9 @@ class Transaction {
     long timestamp;
     string signature;
   public:
+    Transaction(const string& senderAddress, const string& receiverAddress, double amount, long timestamp)
+        : senderAddress(senderAddress), receiverAddress(receiverAddress), amount(amount), timestamp(timestamp) {}
+
     void printTransaction() {
       cout << "Transaction sender address: " << this->senderAddress << "\n";
       cout << "Transaction receiver address: " << this->receiverAddress << "\n";
@@ -52,24 +55,6 @@ class Wallet {
     string publicKey;
   public:
     string generateKeys() {};
-    Transaction createTransaction(string& receiverAddress, double& amount) {
-      long timestamp = time(0);
-
-      Transaction newTransaction;
-      newTransaction.senderAddress = this->address;
-      newTransaction.receiverAddress = receiverAddress;
-      newTransaction.amount = amount;
-      newTransaction.timestamp = timestamp;
-
-      string signature = this->signTransaction(newTransaction);
-      newTransaction.signature = signature;
-
-      return newTransaction;
-    }
-
-    string signTransaction(Transaction transaction) {
-      return "signature";
-    }
     void printWallet() {
       cout << "Wallet address: " << this->address << "\n";
       cout << "Wallet public key: " << this->publicKey << "\n";
@@ -77,5 +62,6 @@ class Wallet {
 };
 
 int main() {
-  cout << time(0);
+  Transaction t("s", "t", 6.9, 69228322);
+  t.printTransaction();
 }
