@@ -1,9 +1,64 @@
 #include <ctime>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
+#include <iomanip>
+#include <openssl/rsa.h>
+#include <openssl/pem.h>
+#include <openssl/err.h>
+#include <openssl/sha.h>
 
 using namespace std;
+
+class Wallet {
+private:
+  string address;
+  RSA* keyPair;
+  string publicKey;
+
+  string generateAddress() {
+    unsigned char hash[SHA256_DIGEST_LENGTH];
+    SHA256_CTX sha256;
+    SHA256_Init(&sha256);
+    SHA256_Update(&sha256, publicKey.c_str(), publicKey.size());
+    SHA256_Final(hash, &sha256);
+    stringstream ss;
+    for(int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+      ss << hex << setw(2) << setfill('0') << (int)hash[i];
+    }
+    return ss.str().substr(0, 40);
+  }
+
+public:
+  Wallet() {
+    keyPair = RSA_generate_key(2048, RSA_F4, NULL, NULL);
+    if (keyPair == nullptr) {
+      cout << "Error generating key pair." << endl;
+      exit(1);
+    }
+
+    BIO* bio = BIO_new(BIO_s_mem());
+    PEM_write_bio_RSAPublicKey(bio, keyPair);
+    size_t key_len = BIO_pending(bio);
+    char* key_chars = new char[key_len];
+    BIO_read(bio, key_chars, key_len);
+    publicKey = string(key_chars, key_len);
+    delete[] key_chars;
+    BIO_free_all(bio);
+
+    address = generateAddress();
+  }
+
+  ~Wallet() {
+    RSA_free(keyPair);
+  }
+
+  void printWallet() {
+    cout << "Wallet address: " << this->address << "\n";
+    cout << "Wallet public key: " << this->publicKey << "\n";
+  }
+};
 
 class Transaction {
   public:
@@ -59,20 +114,7 @@ class Blockchain {
     void printChain() {};
 };
 
-class Wallet {
-  private:
-    string address;
-    string privateKey;
-    string publicKey;
-  public:
-    string generateKeys() {};
-    void printWallet() {
-      cout << "Wallet address: " << this->address << "\n";
-      cout << "Wallet public key: " << this->publicKey << "\n";
-    }
-};
-
 int main() {
-  Transaction t("s", "t", 6.9, 69228322);
-  t.printTransaction();
+  Wallet wallet;
+  wallet.printWallet();
 }
