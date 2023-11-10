@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <iostream>
 #include <string>
 
@@ -15,7 +14,14 @@ class Entity {
 };
 
 int main() {
-  Entity* e = new Entity();
+  Entity* e;
+  
+  {
+    Entity* entity = new Entity("Cherno");
+    e = entity;
+    std::cout << entity->GetName() << "\n";
+  }
+  
   delete e;
   std::cin.get();
 }
