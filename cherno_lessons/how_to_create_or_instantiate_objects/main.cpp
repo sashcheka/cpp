@@ -14,14 +14,11 @@ class Entity {
 };
 
 int main() {
-  Entity* e;
+  int a = 2;
+  int* b = new int[50];
   
-  {
-    Entity* entity = new Entity("Cherno");
-    e = entity;
-    std::cout << entity->GetName() << "\n";
-  }
+  Entity* e = new Entity;
+  Entity* c = (Entity*)malloc(sizeof(Entity));
   
-  delete e;
   std::cin.get();
 }
