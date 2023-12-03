@@ -2,27 +2,26 @@
 #include <ostream>
 #include <vector>
 
-class Vertex {
-public:
+struct Vertex {
   float x, y, z;
+
+  Vertex(float x, float y, float z)
+    : x(x), y(y), z(z) {}
+
+  Vertex(const Vertex& vertex)
+    : x(vertex.x), y(vertex.y), z(vertex.z) {
+    std::cout << "copied!" << std::endl;
+  }
 };
 
-std::ostream& operator<<(std::ostream& stream, const Vertex& vertex) {
-  stream << vertex.x << vertex.y << vertex.z << std::endl;
-  return stream;
-}
-
 int main() {
-  std::vector<Vertex*> vertices;
+  std::vector<Vertex> vertices;
+  vertices.reserve(3);
   
-  vertices.push_back(new Vertex{ 1, 2, 3 });
-  vertices.push_back(new Vertex{ 4, 5, 6 });
-  vertices.push_back(new Vertex{ 7, 8, 9 });
+  Vertex v(4, 5, 6);
   
-  for (Vertex* v : vertices) {
-    std::cout << *v;
-    delete v;
-  }
-  
+  vertices.emplace_back( 1, 2, 3 ); // Use emplace_back when you want to construct an object directly within the vector
+  vertices.push_back(v); // Use push_back when you already have an object and want to add it to the vector.
+
   std::cin.get();
 }
