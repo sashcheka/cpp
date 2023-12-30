@@ -29,8 +29,11 @@ t main() {
     
     for (t k = cnt[i] / 2; k > 0; k--, j++)
       s[j] = i + 'A', s[n - j - 1] = i + 'A';
+
   }
   
-  if (odd) cout << "NO SOLUTION\n";
-  else cout << s;
+  if (odd)
+    cout << "NO SOLUTION";
+  else
+    cout << s;
 }
