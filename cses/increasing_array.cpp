@@ -1,26 +1,20 @@
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
+#define ll long long
+
 int main() {
-  unsigned long long n;
-  unsigned long long count = 0;
+  int n;
   cin >> n;
-  vector<unsigned long long> arr(n);
+  ll ans = 0;
+  ll mx = 0;
   
-  for (size_t i = 0; i < n; i++) {
-    cin >> arr[i];
+  for (int i = 0; i < n; i++) {
+    ll x;
+    cin >> x;
+    mx = max(x, mx);
+    ans += mx - x;
   }
-  
-  for (size_t i = 1; i < n; i++) {
-    if (arr[i] < arr[i - 1]) {
-      count += arr[i - 1] - arr[i];
-      arr[i] = arr[i - 1];
-    }
-  }
-  
-  cout << count;
-  
-  return 0;
+  cout << ans;
 }
