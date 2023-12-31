@@ -3,22 +3,20 @@
 using namespace std;
 
 int main() {
-  string seq;
+  string s;
+  cin >> s;
+  int ans = 1, c = 0;
+  char l = 'A';
   
-  cin >> seq;
-  
-  int count = 1;
-  int longestRep = 1;
-  for (size_t i = 1; i < seq.size(); i++) {
-    if (seq[i - 1] == seq[i])
-      count++;
-    else
-      count = 1;
-    
-    longestRep = max(longestRep, count);
+  for(char& ch : s) {
+    if(ch == l) {
+      c++;
+      ans = max(ans, c);
+    } else {
+      l = ch;
+      c = 1;
+    }
   }
-  
-  cout << longestRep;
-  
-  return 0;
+
+  cout << ans;
 }
