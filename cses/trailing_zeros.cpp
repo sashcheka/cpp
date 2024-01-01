@@ -7,7 +7,7 @@ int main() {
   cin >> n;
   int ans = 0;
   
-  for (int i = 5; n / i >= 1; i *= 5) {
+  for (int i = 5; i <= n; i *= 5) {
     ans += n / i;
   }
   
