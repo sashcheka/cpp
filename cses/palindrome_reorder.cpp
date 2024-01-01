@@ -1,51 +1,37 @@
+#include <cstdlib>
 #include <iostream>
 #include <string>
-#include <unordered_map>
+#include <algorithm>
 
 using namespace std;
 
 int main() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(nullptr);
   string s;
+  int c[26] = {}, c1 = 0;
   cin >> s;
-  unordered_map<char, int> map;
-  int count = 0;
-  int size = s.size();
+  for (char& ch : s)
+    c[ch - 'A']++;
   
-  for (char& ch : s) {
-    map[ch]++;
-  }
-  
-  for (auto& p : map) {
-    if (p.second % 2)
-      count++;
-  }
-  
-  if ((size % 2 == 1 && count != 1) || (size % 2 == 0 && count > 0)) {
+  for (int i = 0; i < 26; i++)
+      c1 += c[i]&1;
+
+  if (c1>1) {
     cout << "NO SOLUTION";
     return 0;
   }
   
-  string pal(size, ' ');
-  int l = 0, r = size - 1;
+  string t;
+  for (int i = 0; i < 26; i++)
+    if (c[i]&1^1)
+      for (int j = 0; j < c[i] / 2; j++)
+        t += (char)(i + 'A');
+  cout << t;
   
-  for (auto& p : map) {
-    char ch = p.first;
-    int count = p.second;
-    
-    if (count % 2) {
-      pal[size / 2] = ch;
-      count--;
-    }
-    
-    for (int i = 0; i < count / 2; i++) {
-      pal[l++] = ch;
-      pal[r--] = ch;
-    }
-  }
+  for (int i = 0; i < 26; i++)
+    if (c[i]&1)
+      for (int j = 0; j < c[i]; j++)
+        cout << (char)(i + 'A');
 
-  cout << pal;
-
-  return 0;
+  reverse(t.begin(), t.end());
+  cout << t;
 }
