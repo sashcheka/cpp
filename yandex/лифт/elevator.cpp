@@ -2,39 +2,42 @@
 #include <vector>
 
 using namespace std;
+
 typedef long long ll;
+typedef unsigned long long ull;
 
 int main() {
-  ll k, n;
+  ios_base::sync_with_stdio(0);
+  cin.tie(0);
+  ll n, k;
   cin >> k;
   cin >> n;
-  vector<ll> v(n);
+  vector<int> v(n);
   
-  for (ll i = 0; i < n; i++)
+  for (int i = 0; i < n; i++)
     cin >> v[i];
   
-  unsigned long long t = 0;
-  ll places = 0;
+  ull t = 0;
+  ll p = 0;
   
-  for (ll i = n - 1; i >= 0; i--) {
-    if (places >= v[i]) {
-      places -= v[i];
+  for (int i = n - 1; i >= 0; i--) {
+    if (p >= v[i]) {
+      p -= v[i];
       continue;
     } else {
-      v[i] -= places;
-      places = 0;
+      v[i] -= p;
+      p = 0;
     }
-    
-    ll ride = v[i] / k;
-    t += ride * (i + 1) * 2;
-    v[i] -= ride * k;
-    
+
+    ll r = v[i] / k;
+    t += r * (i + 1) * 2;
+    v[i] -= r * k;
+
     if (v[i] > 0) {
-      t += (i + 1) * 2;
-      places = k - v[i];
+      p = k - v[i];
       v[i] = 0;
+      t += (i + 1) * 2;
     }
   }
-  
   cout << t;
 }
