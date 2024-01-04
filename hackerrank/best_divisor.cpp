@@ -7,30 +7,27 @@ int main() {
   int n;
   cin >> n;
 
-  vector<int> nums;
-  
-  for (int i = 1; i <= n; i++)
-    if (n%i == 0)
-      nums.push_back(i);
+  int best = 0;
+  int ans = 0;
 
-  int max_sum = 0;
-  int best_divisor;
+  for (int i = 1; i <= n; i++) {
+    if (n%i)
+      continue;
   
-  for (int num : nums) {
-    int temp = num;
+    int temp = i;
     int sum = 0;
-    while(num != 0) {
-      sum += num % 10;
-      num /= 10;
+    while(temp > 0) {
+      sum += temp % 10;
+      temp /= 10;
     }
     
-    if (sum > max_sum || (sum == max_sum && temp < best_divisor)) {
-      best_divisor = temp;
-      max_sum = sum;
+    if (sum > best) {
+      best = sum;
+      ans = i;
     }
   }
   
-  cout << best_divisor;
+  cout << ans;
 
   return 0;
 }
