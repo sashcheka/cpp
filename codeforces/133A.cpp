@@ -7,8 +7,10 @@ int main() {
   string p;
   cin >> p;
   
-  if (p.find('H') != -1 || p.find('Q') != -1 || p.find('9') != -1)
-    cout << "YES";
-  else
-    cout << "NO";
+  for (char& ch : p)
+    if (ch == 'H' || ch == 'Q' || ch == '9') {
+      cout << "YES";
+      return 0;
+    }
+  cout << "NO";
 }
