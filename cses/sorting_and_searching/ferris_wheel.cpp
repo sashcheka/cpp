@@ -25,22 +25,14 @@ int main() {
       j--;
     } else {
       ans++;
-<<<<<<< HEAD
       p[i] = p[j] = 0;
-=======
-      p[i] = p[j] = -1;
->>>>>>> 0d209cbf3b433484b8355d4a7ea99eda1a914240
       i++;
       j--;
     }
   }
   
   for (int i = 0 ; i < n; i++)
-<<<<<<< HEAD
     if (p[i] != 0)
-=======
-    if (p[i] != -1)
->>>>>>> 0d209cbf3b433484b8355d4a7ea99eda1a914240
       ans++;
   
   cout << ans;
