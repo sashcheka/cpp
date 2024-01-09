@@ -17,23 +17,19 @@ int main() {
   
   sort(p.begin(), p.end());
     
-  int i = 0;
-  int j = n - 1;
+  int l = 0;
+  int r = n - 1;
   
-  while(i < j) {
-    if (p[i] + p[j] > x) {
-      j--;
-    } else {
-      ans++;
-      p[i] = p[j] = 0;
-      i++;
-      j--;
-    }
+  while (l < r && l < n && r >= 0) {
+    if (p[l] + p[r] <= x)
+      l++, r--;
+    else
+      r--;
+    ans++;
   }
   
-  for (int i = 0 ; i < n; i++)
-    if (p[i] != 0)
-      ans++;
+  if (l == r)
+    ans++;
   
   cout << ans;
 }
