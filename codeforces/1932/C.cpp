@@ -1,10 +1,9 @@
 #include <iostream>
-#include <deque>
 #include <string>
 #include <vector>
+#include <assert.h>
 
 using namespace std;
-typedef long long ll;
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -14,34 +13,37 @@ int main() {
     cin >> t;
 
     while (t--) {
-      ll n, m;
+      int n, m;
       cin >> n >> m;
-      int a[n];
       
-      for (int& i : a)
-        cin >> i;
+      vector<int> v(n);
+
+      int a;
+      for (int i = 0; i < n; i++)
+        cin >> v[i];
       
       string s;
       cin >> s;
-      ll l = 0, r = n - 1;
-      for (char& ch : s) {
-        l += ch == 'L';
-        r -= ch == 'R';
-      }
+
+      int l = 0;
+      int r = n - 1;
+      for (int i = 0; i < n - 1; i++)
+        s[i] == 'L' ? l++ : r--;
+
+      assert(l == r);
+
+      vector<int> ans(n);
+      ans[n - 1] = v[l] % m;
       
-      ll prod = 1;
-      int ans[n];
-      for (ll i = n - 1; i >= 0; i--) {
-        ll dir = s[i];
-        if (dir == 'L') {
-          l--;
-          prod = (prod * a[l]) % m;
-        } else {
-          r++;
-          prod = (prod * a[r]) % m;
-        }
-        ans[i] = prod;
+      for (int i = n - 2; i >= 0; i--) {
+        if (s[i] == 'L')
+          ans[i] = (ans[i + 1] * v[--l]) % m;
+        else
+          ans[i] = (ans[i + 1] * v[++r]) % m;
       }
+
+      assert(l == 0);
+      assert(r == n - 1);
       
       for (int& i : ans)
         cout << i << ' ';
